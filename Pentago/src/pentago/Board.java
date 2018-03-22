@@ -420,6 +420,7 @@ public class Board {
 	 * @param block
 	 */
 	public void RotateR(int block) {
+		/*Work in progress*/
 		String temp = "";
 		int startX = 0;
 		int maxX = 2;
