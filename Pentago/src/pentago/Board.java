@@ -447,9 +447,10 @@ public class Board {
 				printBoard[maxX-j][startY] = printBoard[maxX-j][maxY]; //4
 				printBoard[maxX-j][maxY] = temp; //5
 			}
+			/*
 			RotateL(block);
 			RotateL(block);
-			RotateL(block);
+			RotateL(block);*/
 	}
 	
 	/**
