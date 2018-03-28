@@ -441,16 +441,12 @@ public class Board {
 		}
 
 			for(int j = 0; j < 2; j++) {
-				temp = printBoard[startX + j][maxY - j]; //1
-				printBoard[startX + j][maxY - j] = printBoard[startX][startY + j]; //2
-				printBoard[startX][startY + j] = printBoard[maxX-j][startY]; //3
-				printBoard[maxX-j][startY] = printBoard[maxX-j][maxY]; //4
+				temp = printBoard[startX][maxY - j]; //1
+				printBoard[startX][maxY - j] = printBoard[startX + j][startY]; //2
+				printBoard[startX + j][startY] = printBoard[maxX][startY + j]; //3
+				printBoard[maxX][startY + j] = printBoard[maxX-j][maxY]; //4
 				printBoard[maxX-j][maxY] = temp; //5
 			}
-			/*
-			RotateL(block);
-			RotateL(block);
-			RotateL(block);*/
 	}
 	
 	/**
