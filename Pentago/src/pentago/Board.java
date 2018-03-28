@@ -21,13 +21,6 @@ public class Board {
 	 * A 2d array containing the token for each slot. This is used to print the board.
 	 */
 	String[][] printBoard = new String[6][6];
-	/**
-	 * These four arrays are used to calculate the positioning of the tokens in each quad.
-	 */
-	/*String[][] quad1 = new String[3][3];
-	String[][] quad2 = new String[3][3];
-	String[][] quad3 = new String[3][3];
-	String[][] quad4 = new String[3][3];*/
 
 	/**
 	 * The default constructor. Sets both win conditions to false and adds the empty token.
@@ -40,15 +33,6 @@ public class Board {
 		for(int i = 0; i < printBoard.length; i++) {
 			for(int j = 0; j < printBoard.length; j++) {
 				printBoard[i][j] = baseToken;
-				/*if(i > 2 && j > 2) {
-					quad4[i-3][j-3] = baseToken;
-				} else if(i > 2 && j < 3) {
-					quad3[i-3][j] = baseToken;
-				} else if(j > 2) {
-					quad2[i][j-3] = baseToken;
-				} else {
-					quad1[i][j] = baseToken;
-				}*/
 			}
 		}	
 	}
@@ -241,15 +225,6 @@ public class Board {
 		String tester = "";
 		for(int i = 0; i < printBoard.length; i++) {
 			for(int j = 0; j < printBoard[0].length; j++) {
-				/*if(i > 2 && j > 2) {
-					tester = quad4[i-3][j-3];
-				} else if(i > 2 && j < 3) {
-					tester = quad3[i-3][j];
-				} else if(j > 2) {
-					tester = quad2[i][j-3];
-				} else {
-					tester = quad1[i][j];
-				}*/
 				tester = printBoard[i][j];
 				if(!tester.equals("-")) {
 					if(checkNeighbors(tester, i, j)>4) {
@@ -276,7 +251,6 @@ public class Board {
 	 */
 	public int checkNeighbors(String token, int x, int y) {
 		int neighbors = 0;
-		//fillBig();
 		//check vertical
 		for(int h = x; h < printBoard.length; h++) {
 			if(printBoard[h][y].equals(token)) {
@@ -347,15 +321,6 @@ public class Board {
 		for(int i = 0; i < printBoard.length; i++) {
 			nums = 0;
 			for(int j = 0; j < printBoard[0].length; j++) {
-				/*if(i > 2 && j > 2) {
-					tester = quad4[i-3][j-3];
-				} else if(i > 2 && j < 3) {
-					tester = quad3[i-3][j];
-				} else if(j > 2) {
-					tester = quad2[i][j-3];
-				} else {
-					tester = quad1[i][j];
-				}*/
 				tester = printBoard[i][j];
 				nums = checkNeighbors(tester, i, j);
 				if(unit.token.equals(tester)) {
@@ -420,7 +385,6 @@ public class Board {
 	 * @param block
 	 */
 	public void RotateR(int block) {
-		/*Work in progress*/
 		String temp = "";
 		int startX = 0;
 		int maxX = 2;
@@ -480,55 +444,6 @@ public class Board {
 				printBoard[maxX][maxY-j] = printBoard[maxX-j][startY];
 				printBoard[maxX-j][startY] = temp;
 			}
-		/*
-		if(block == 1) {
-			quarter = quad1.length;
-			for(int i = 0; i < quarter/2; i++) {
-				for(int j = 0; j <quarter-i-1; j++) {
-					temp = quad1[i][j];
-					quad1[i][j] = quad1[j][quarter-1-i];
-					quad1[j][quarter-i-1] = quad1[quarter-i-1][quarter-j-1];
-					quad1[quarter-i-1][quarter-j-1] = quad1[quarter-j-1][i];
-					quad1[quarter-j-1][i] = temp;
-				}
-			}
-		}
-		if(block == 2) {
-			quarter = quad2.length;
-			for(int i = 0; i < quarter/2; i++) {
-				for(int j = 0; j <quarter-i-1; j++) {
-					temp = quad2[i][j];
-					quad2[i][j] = quad2[j][quarter-1-i];
-					quad2[j][quarter-i-1] = quad2[quarter-i-1][quarter-j-1];
-					quad2[quarter-i-1][quarter-j-1] = quad2[quarter-j-1][i];
-					quad2[quarter-j-1][i] = temp;
-				}
-			}
-		}
-		if(block == 3) {
-			quarter = quad2.length;
-			for(int i = 0; i < quarter; i++) {
-				for(int j = 0; j <quarter-i-1; j++) {
-					temp = quad3[i][j];
-					quad3[i][j] = quad3[j][quarter-1-i];
-					quad3[j][quarter-i-1] = quad3[quarter-i-1][quarter-j-1];
-					quad3[quarter-i-1][quarter-j-1] = quad3[quarter-j-1][i];
-					quad3[quarter-j-1][i] = temp;
-				}
-			}
-		}
-		if(block == 4) {
-			quarter = quad4.length;
-			for(int i = 0; i < quarter/2; i++) {
-				for(int j = 0; j <quarter-i-1; j++) {
-					temp = quad4[i][j];
-					quad4[i][j] = quad4[j][quarter-1-i];
-					quad4[j][quarter-i-1] = quad4[quarter-i-1][quarter-j-1];
-					quad4[quarter-i-1][quarter-j-1] = quad4[quarter-j-1][i];
-					quad4[quarter-j-1][i] = temp;
-				}
-			}
-		}*/
 	}
 	
 	/**
@@ -544,15 +459,6 @@ public class Board {
 					board += "|";
 				} 
 				board += " " + printBoard[i][j] + " ";
-				/*if(i > 2 && j > 2) {
-					board += " " + quad4[i-3][j-3] + " ";
-				} else if(i > 2 && j < 3) {
-					board += " " + quad3[i-3][j] + " ";
-				} else if(j > 2) {
-					board += " " + quad2[i][j-3] + " ";
-				} else {
-					board += " " + quad1[i][j] + " ";
-				}*/
 				if(j == 5) {
 					board += "|\n";
 				}
