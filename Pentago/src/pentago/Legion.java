@@ -3,6 +3,9 @@ package pentago;
 import java.util.PriorityQueue;
 /*Legion is currently being revamped an represents a work in progress*/
 public class Legion {
+	/**
+	 * An array containing every possible move
+	 */
 	String[] moves = {"1/1 1R", "1/2 1R", "1/3 1R", "1/4 1R", "1/5 1R", "1/6 1R", "1/7 1R", "1/8 1R", "1/9 1R" 
 + "1/1 1L", "1/2 1L", "1/3 1L", "1/4 1L", "1/5 1L", "1/6 1L", "1/7 1L", "1/8 1L", "1/9 1L"
 + "2/1 1R", "2/2 1R", "2/3 1R", "2/4 1R", "2/5 1R", "2/6 1R", "2/7 1R", "2/8 1R", "2/9 1R"
@@ -11,14 +14,33 @@ public class Legion {
 + "3/1 1L", "3/2 1L", "3/3 1L", "3/4 1L", "3/5 1L", "3/6 1L", "3/7 1L", "3/8 1L", "3/9 1L"
 + "4/1 1R", "4/2 1R", "4/3 1R", "4/4 1R", "4/5 1R", "4/6 1R", "4/7 1R", "4/8 1R", "4/9 1R"
 + "4/1 1L", "4/2 1L", "4/3 1L", "4/4 1L", "4/5 1L", "4/6 1L", "4/7 1L", "4/8 1L", "4/9 1L"};
+	/**
+	 * The token belonging to the AI
+	 */
 	String token = "";
+	/**
+	 * A copy of the board for Legion to manipulate in oder to make decisions
+	 */
 	Board state;
+	/**
+	 * The root node for the minmax tree
+	 */
 	Root myRoot;
+	
+	/**
+	 * A two parameter constructor for the AI
+	 * @param color the token Legion wil place on the board
+	 * @param theState the board for Legion to manipulate
+	 */
 	public Legion(String color, Board theState) {
 		token = color;
 		state = theState;
 	}
 	
+	/**
+	 * Begins the process of making a minmax tree and finds the best possible move
+	 * @return
+	 */
 	public String findBest() {
 		String bestMove = "";
 		myRoot = new Root(0, 2, moves, state);
@@ -26,15 +48,41 @@ public class Legion {
 		return bestMove;
 	}
 	
+	/**
+	 * The generic root for the minmax tree
+	 * @author Gantrock
+	 *
+	 */
 	private class Root{
+		/**
+		 * The "current" depth
+		 */
 		int depth;
+		/**
+		 * The score of a node
+		 */
 		int score;
+		/**
+		 * The maximum depth to create children nodes to.
+		 */
 		int level;
+		/**
+		 * A copy of the board for manipulation
+		 */
 		Board state;
+		/** 
+		 * An array containing all of the possible moves.
+		 */
 		String[] moves;
 		String theMove;
+		/**
+		 * A priority queue of Maxnodes used to determine the highest scoring node
+		 */
 		PriorityQueue<MaxNode> branching = new PriorityQueue<MaxNode>();
 		
+		/**
+		 * A four parameter constructor for a generic minmax root
+		 */
 		private Root(int theScore, int howDeep, String[] theMoves, Board theState) {
 			depth = 0;
 			score= theScore;
@@ -43,6 +91,11 @@ public class Legion {
 			moves = theMoves.clone();
 		}
 		
+		/**
+		 * Recursive function that creates new nodes for every possible move until we reach
+		 * the depth. When the depth is reached the nodes are scored and the best nodes move is chosen.
+		 * @return A string representing the best move to make.
+		 */
 		private String findBest() {
 			String bestMove = "";
 			//For each possible move create a new ranch node
@@ -53,6 +106,10 @@ public class Legion {
 			return bestMove;
 		}
 		
+		/**
+		 * Creates all of the children.
+		 * @param move
+		 */
 		private void addBranch(String move) {
 			branching.add(new MaxNode(score, depth, level, state, moves, move));
 		}
@@ -103,6 +160,7 @@ public class Legion {
 			branch.add(new MaxNode(score, depth, level, state, moves, move));
 		}
 		
+		//This should be rewritten to actually work.
 		public int checkScore(Board state) {
 			String tester = "";
 			int nums = 0;
@@ -194,6 +252,7 @@ public class Legion {
 			branch.add(new MinNode(score, depth, level, moves, state, move));
 		}
 		
+		//This should be rewritten so that it actually works.
 		public int checkScore(Board state) {
 			String tester = "";
 			int nums = 0;
