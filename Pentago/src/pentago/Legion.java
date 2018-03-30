@@ -146,7 +146,9 @@ public class Legion {
 			if(level > depth) {
 				//for each possible move create a new MinNode
 				for(String motion: moves) {
-					addMax(motion);
+					if(state.validMove(motion)) {
+						addMax(motion);
+					}
 				}
 				max = branch.poll().score;
 			} else {
@@ -238,7 +240,9 @@ public class Legion {
 			if(level > depth) {
 				//for each possible move create a new MinNode
 				for(String motion: moves) {
-					addMin(motion);
+					if(state.validMove(motion)){
+						addMin(motion);
+					}
 				}
 				min = branch.poll().score;
 			} else {
