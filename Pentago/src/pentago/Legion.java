@@ -69,7 +69,7 @@ public class Legion {
 		/**
 		 * A copy of the board for manipulation
 		 */
-		Board state;
+		Board myState;
 		/** 
 		 * An array containing all of the possible moves.
 		 */
@@ -87,7 +87,7 @@ public class Legion {
 			depth = 0;
 			score= theScore;
 			level = howDeep;
-			state = theState;
+			myState = theState;
 			moves = theMoves.clone();
 		}
 		
@@ -98,9 +98,11 @@ public class Legion {
 		 */
 		private String findBest() {
 			String bestMove = "";
-			//For each possible move create a new ranch node
+			//For each possible move create a new branch node
 			for(String motion: moves) {
-				addBranch(motion);
+				if(state.validMove(motion)){
+					addBranch(motion);
+				}
 			} 
 			bestMove = branching.poll().theMove;
 			return bestMove;
@@ -126,7 +128,7 @@ public class Legion {
 		int depth;
 		int score;
 		int level;
-		Board state;
+		Board minState;
 		String[] moves;
 		String theMove;
 		PriorityQueue<MaxNode> branch = new PriorityQueue<MaxNode>();
@@ -134,7 +136,8 @@ public class Legion {
 		private MinNode(int theScore, int theDepth, int howDeep, String[] theMoves, Board theState, String myMove) {
 			depth = theDepth + 1;
 			level = howDeep;
-			state = theState;
+			minState = theState;
+			minState.placeToken(myMove);
 			moves = theMoves.clone();
 			theMove = myMove;
 			score = findMax();
@@ -146,30 +149,30 @@ public class Legion {
 			if(level > depth) {
 				//for each possible move create a new MinNode
 				for(String motion: moves) {
-					if(state.validMove(motion)) {
+					if(minState.validMove(motion)) {
 						addMax(motion);
 					}
 				}
 				max = branch.poll().score;
 			} else {
 				//find score
-				score = checkScore(state);
+				score = checkScore(minState);
 			}
 			return max;
 		}
 		
 		private void addMax(String move) {
-			branch.add(new MaxNode(score, depth, level, state, moves, move));
+			branch.add(new MaxNode(score, depth, level, minState, moves, move));
 		}
 		
 		//This should be rewritten to actually work.
-		public int checkScore(Board state) {
+		public int checkScore(Board theState) {
 			String tester = "";
 			int nums = 0;
 			int score = 0;
-			for(int i = 0; i < state.printBoard.length; i++) {
+			for(int i = 0; i < theState.printBoard.length; i++) {
 				nums = 0;
-				for(int j = 0; j < state.printBoard[0].length; j++) {
+				for(int j = 0; j < theState.printBoard[0].length; j++) {
 					/*if(i > 2 && j > 2) {
 						tester = state.quad4[i-3][j-3];
 					} else if(i > 2 && j < 3) {
@@ -179,7 +182,7 @@ public class Legion {
 					} else {
 						tester = state.quad1[i][j];
 					}*/
-					nums = state.checkNeighbors(tester, i, j);
+					nums = theState.checkNeighbors(tester, i, j);
 					if(token.equals(tester)) {
 						if(nums == 3) {
 							score += 5;
@@ -218,7 +221,7 @@ public class Legion {
 		int depth;
 		int score;
 		int level;
-		Board state;
+		Board maxState;
 		String[] moves;
 		String theMove;
 
@@ -228,7 +231,8 @@ public class Legion {
 		private MaxNode(int theScore, int theDepth, int howDeep, Board theState, String[]theMoves, String myMove) {
 			depth = theDepth + 1;
 			level = howDeep;
-			state = theState;
+			maxState = theState;
+			maxState.placeToken(myMove);
 			moves = theMoves.clone();
 			theMove = myMove;
 			score = findMin();
@@ -240,30 +244,30 @@ public class Legion {
 			if(level > depth) {
 				//for each possible move create a new MinNode
 				for(String motion: moves) {
-					if(state.validMove(motion)){
+					if(maxState.validMove(motion)){
 						addMin(motion);
 					}
 				}
 				min = branch.poll().score;
 			} else {
 				//find score
-				score = checkScore(state);
+				score = checkScore(maxState);
 			}
 			return min;
 		}
 		
 		private void addMin(String move) {
-			branch.add(new MinNode(score, depth, level, moves, state, move));
+			branch.add(new MinNode(score, depth, level, moves, maxState, move));
 		}
 		
 		//This should be rewritten so that it actually works.
-		public int checkScore(Board state) {
+		public int checkScore(Board theState) {
 			String tester = "";
 			int nums = 0;
 			int score = 0;
-			for(int i = 0; i < state.printBoard.length; i++) {
+			for(int i = 0; i < theState.printBoard.length; i++) {
 				nums = 0;
-				for(int j = 0; j < state.printBoard[0].length; j++) {
+				for(int j = 0; j < theState.printBoard[0].length; j++) {
 					/*if(i > 2 && j > 2) {
 						tester = state.quad4[i-3][j-3];
 					} else if(i > 2 && j < 3) {
@@ -273,7 +277,7 @@ public class Legion {
 					} else {
 						tester = state.quad1[i][j];
 					}*/
-					nums = state.checkNeighbors(tester, i, j);
+					nums = maxState.checkNeighbors(tester, i, j);
 					if(token.equals(tester)) {
 						if(nums == 3) {
 							score += 5;
