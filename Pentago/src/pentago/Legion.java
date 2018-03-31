@@ -100,7 +100,7 @@ public class Legion {
 			String bestMove = "";
 			//For each possible move create a new branch node
 			for(String motion: moves) {
-				if(state.validMove(motion)){
+				if(myState.validMove(motion)){
 					addBranch(motion);
 				}
 			} 
@@ -113,7 +113,7 @@ public class Legion {
 		 * @param move
 		 */
 		private void addBranch(String move) {
-			branching.add(new MaxNode(score, depth, level, state, moves, move));
+			branching.add(new MaxNode(score, depth, level, myState, moves, move));
 		}
 		
 
