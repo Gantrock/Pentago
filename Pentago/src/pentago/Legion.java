@@ -47,7 +47,11 @@ public class Legion {
 		bestMove = myRoot.findBest();
 		return bestMove;
 	}
-	
+	/*
+	 * Algorithm plan:
+	 * If not at depth create children
+	 * If at depth return score
+	 */
 	/**
 	 * The generic root for the minmax tree
 	 * @author Gantrock
