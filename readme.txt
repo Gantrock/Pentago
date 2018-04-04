@@ -1,0 +1,1 @@
+A text-based version of the game Pentago. It is currently being refactored from it's original version. The original version was built during a prolonged stretch of minimal sleep and as such many methods were "hacky" or just plain messy. Much of the legacy code remains, commented out, but will likely be removed on the "remastering" is complete.

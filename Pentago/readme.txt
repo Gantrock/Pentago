@@ -1,1 +1,0 @@
-Sorry, I ran out of time. As it stands the program is largely jsut a complete two-player Pentago board with a half-built Ai.
