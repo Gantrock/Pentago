@@ -2,7 +2,6 @@ package pentago;
 
 import java.util.PriorityQueue;
 /*Legion is currently being revamped an represents a work in progress*/
-//Commit test, is git marking commits for the right day?
 public class Legion {
 	/**
 	 * An array containing every possible move
